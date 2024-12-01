@@ -1,6 +1,7 @@
 #include <algorithm>
 #include <iostream>
 #include <string>
+#include <map>
 #include <fstream>
 #include <vector>
 
@@ -38,6 +39,28 @@ int main()
     cout << sum << endl;
 
     // Part 2
+
+    map<int, int> resultMap;
+    for(int i = 0; i < n1.size(); i++)
+    {
+        resultMap[n1[i]] = 0;
+    }
+
+    for(int i = 0; i < n1.size(); i++)
+    { 
+        if(resultMap.find(n2[i]) != resultMap.end())
+        {
+            resultMap[n2[i]] += 1;
+        }
+    }
+
+    int sum2 = 0;
+    for(int i = 0; i < n1.size(); i++)
+    { 
+        sum2 += resultMap[n1[i]] * n1[i];
+    }
+
+    cout << sum2 << endl;
 
     inputFile.close();
 
