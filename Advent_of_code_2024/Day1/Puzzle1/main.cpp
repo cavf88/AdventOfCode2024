@@ -26,15 +26,19 @@ int main()
         n2.push_back(atoi(secondNumberStr.c_str()));
     }
 
-        sort(n1.begin(), n1.end());
-        sort(n2.begin(), n2.end());
+    sort(n1.begin(), n1.end());
+    sort(n2.begin(), n2.end());
 
-        for(int i = 0; i < n1.size(); i++)
-        {
-            sum += abs(n1[i] - n2[i]);
-        }
+    // Part 1
+    for(int i = 0; i < n1.size(); i++)
+    {
+        sum += abs(n1[i] - n2[i]);
+    }
 
     cout << sum << endl;
+
+    // Part 2
+
     inputFile.close();
 
     return 0;
