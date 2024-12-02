@@ -21,22 +21,15 @@ void part1(const vector<int>& n1, const vector<int> n2)
 void part2(const vector<int>& n1, const vector<int> n2)
 {
     map<int, int> resultMap;
+    int sum = 0;
+
     for(int i = 0; i < n1.size(); i++)
     {
-        resultMap[n1[i]] = 0;
+        resultMap[n2[i]]++;
     }
 
-    for(int i = 0; i < n1.size(); i++)
-    { 
-        if(resultMap.find(n2[i]) != resultMap.end())
-        {
-            resultMap[n2[i]] += 1;
-        }
-    }
-
-    int sum = 0;
-    for(int i = 0; i < n1.size(); i++)
-    { 
+    for(int i  =0 ; i < n1.size(); i++)
+    {
         sum += resultMap[n1[i]] * n1[i];
     }
 
