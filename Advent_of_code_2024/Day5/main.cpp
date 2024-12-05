@@ -1,4 +1,4 @@
-#include <algorithm>>
+#include <algorithm>
 #include <iostream>
 #include <string>
 #include <map>
@@ -10,8 +10,7 @@ using namespace std;
 typedef map<int, vector<int>> Rules;
 typedef vector<vector<int>> Pages;
 
-//const static int HASH_NUM = 1;
-
+// Parse the rules which are formatted n|m
 void parseLineInRules(const string& line, Rules& rules)
 {
     int n1 = 0;
@@ -20,7 +19,8 @@ void parseLineInRules(const string& line, Rules& rules)
     rules[n1].push_back(n2);
 }
 
-void parseLine(const string& line, Pages& pages)
+// Parse pages which are in a , separated format.
+void parsePages(const string& line, Pages& pages)
 {
     int pos = 0;
     vector<int> pageNums;
@@ -34,6 +34,9 @@ void parseLine(const string& line, Pages& pages)
     pages.push_back(pageNums);
 }
 
+// Validate the Pages. 
+// To validate iterate through pages.
+// If the pages after the i page exist in the Rules for the page, then the pages are valid.
 bool validatePages(const vector<int> pages, const Rules& rules)
 {
     for(int i = 0; i < pages.size() - 1; ++i)
@@ -59,7 +62,8 @@ bool validatePages(const vector<int> pages, const Rules& rules)
     return true;
 }
 
-int calculateMiddlePagesSum(const Pages& pages, const vector<int>& indexes)
+// Get the middle value and sum it.
+int calculateMiddlePagesSumPart1(const Pages& pages, const vector<int>& indexes)
 {
     int sum = 0;
     for(int i = 0; i < indexes.size(); ++i)
@@ -73,9 +77,42 @@ int calculateMiddlePagesSum(const Pages& pages, const vector<int>& indexes)
     return sum;
 }
 
+// Iterate through the incorrect vector and sort it by swapping values until validate is achieved.
+int calculateMiddlePageSumPart2(const Rules& rules, Pages& pages,const vector<int>& indexes)
+{
+    int sum = 0;
+    for(int i = 0; i < indexes.size(); ++i)
+    {
+        const int index = indexes[i];
+        auto pageVec = pages.at(index);
+        const int numOfPages = pageVec.size();
+        do
+        {
+            // go in the incorrect pages and swap values.
+            for(int j = 0; j < pageVec.size(); j++)
+            {
+                const auto pageRule = rules.at(pageVec[j]);
+                for(int k = j + 1; k < pageVec.size(); k++)
+                {
+                    if(find(pageRule.begin(), pageRule.end(), pageVec[k]) == pageRule.end())
+                    {
+                        const int temp = pageVec[j];
+                        pageVec[j] = pageVec[k];
+                        pageVec[k] = temp;
+                    }
+                }
+            }
+        } while (!validatePages(pageVec, rules));
+
+        sum += pageVec.at(numOfPages / 2);
+           
+    }
+
+    return sum;
+}
+
 int main()
 {
-
     string inputLine;
     fstream inputFile("input.txt");
     
@@ -91,22 +128,28 @@ int main()
             }
             else
             {
-                parseLine(inputLine, pages);
+                parsePages(inputLine, pages);
             }
         }
     }
     inputFile.close();
 
     vector<int> validPagesIndexes;
+    vector<int> invaludPagesIndexes;
     for(int i = 0; i < pages.size(); ++i)
     {
         if(validatePages(pages[i], rules))
         {
             validPagesIndexes.push_back(i);
         }
+        else
+        {
+            invaludPagesIndexes.push_back(i);
+        }
     }
 
-    cout << calculateMiddlePagesSum(pages, validPagesIndexes) << endl;
+    cout << calculateMiddlePagesSumPart1(pages, validPagesIndexes) << endl;
+    cout << calculateMiddlePageSumPart2(rules, pages, invaludPagesIndexes) << endl;
 
     return 0;
 }
