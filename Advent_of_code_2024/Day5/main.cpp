@@ -1,3 +1,4 @@
+#include <algorithm>>
 #include <iostream>
 #include <string>
 #include <map>
@@ -8,6 +9,8 @@ using namespace std;
 
 typedef map<int, vector<int>> Rules;
 typedef vector<vector<int>> Pages;
+
+//const static int HASH_NUM = 1;
 
 void parseLineInRules(const string& line, Rules& rules)
 {
@@ -31,11 +34,51 @@ void parseLine(const string& line, Pages& pages)
     pages.push_back(pageNums);
 }
 
+bool validatePages(const vector<int> pages, const Rules& rules)
+{
+    for(int i = 0; i < pages.size() - 1; ++i)
+    {
+        const int pageNum = pages[i];
+        if(rules.find(pageNum) != rules.end())
+        {
+            const vector<int> pageRules = rules.at(pageNum);
+            for(int k = i + 1; k < pages.size() - 1; ++k)
+            {
+                if(find(pageRules.begin(), pageRules.end(), pages[k]) == pageRules.end())
+                {
+                    return false;
+                }
+
+            }
+        }   
+        else
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+int calculateMiddlePagesSum(const Pages& pages, const vector<int>& indexes)
+{
+    int sum = 0;
+    for(int i = 0; i < indexes.size(); ++i)
+    {
+        const int index = indexes[i];
+        const auto pageVec = pages.at(index);
+        const int numOfPages = pageVec.size();
+        cout << "Val: " << pageVec.at((numOfPages / 2) + 1)<< endl; 
+        sum += pageVec.at(numOfPages / 2);
+    }
+
+    return sum;
+}
+
 int main()
 {
 
     string inputLine;
-    fstream inputFile("input_test.txt");
+    fstream inputFile("input.txt");
     
     Rules rules;
     Pages pages;
@@ -53,10 +96,19 @@ int main()
             }
         }
     }
-)
-
     inputFile.close();
 
+    vector<int> validPagesIndexes;
+    for(int i = 0; i < pages.size(); ++i)
+    {
+        if(validatePages(pages[i], rules))
+        {
+            validPagesIndexes.push_back(i);
+            cout << i << endl;
+        }
+    }
+
+    cout << calculateMiddlePagesSum(pages, validPagesIndexes) << endl;
 
     return 0;
 }
