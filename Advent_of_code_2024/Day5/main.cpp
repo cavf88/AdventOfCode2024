@@ -67,7 +67,6 @@ int calculateMiddlePagesSum(const Pages& pages, const vector<int>& indexes)
         const int index = indexes[i];
         const auto pageVec = pages.at(index);
         const int numOfPages = pageVec.size();
-        cout << "Val: " << pageVec.at((numOfPages / 2) + 1)<< endl; 
         sum += pageVec.at(numOfPages / 2);
     }
 
@@ -104,7 +103,6 @@ int main()
         if(validatePages(pages[i], rules))
         {
             validPagesIndexes.push_back(i);
-            cout << i << endl;
         }
     }
 
