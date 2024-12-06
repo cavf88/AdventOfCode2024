@@ -10,17 +10,18 @@ const static int INVALID_POS = string::npos;
 
 void part1(const vector<string>& rows, int labRow, int labCol)
 {
-    int sum = 0;
+    int sum = 1;
     int row = labRow;
     int col = labCol;
 
-    int rowObstructed = INVALID_POS;
+    int rowObstructed = labRow;
     int colObstructed = labCol;
+    int absSum = 0;
 
     do
     {
         // vertical lookup |^|
-        for(int i = 0; i < rows.size(); ++i)
+        for(int i = rowObstructed; i > INVALID_POS; --i)
         {
             if(rows[i].at(colObstructed) == '#')
             {
@@ -29,14 +30,18 @@ void part1(const vector<string>& rows, int labRow, int labCol)
             }
         }
 
+        absSum = abs(rowObstructed - row);
+        cout << absSum << endl;
         sum += abs(rowObstructed - row);
-        col = rowObstructed;
+        row = rowObstructed;
 
         // horizontal lookup |>|
         colObstructed = rows[rowObstructed].find('#', colObstructed) - 1;
         if(colObstructed + 1 == INVALID_POS)
             break;
 
+        absSum = abs(colObstructed - col);
+        cout << absSum << endl;
         sum += abs(colObstructed - col);
         col = colObstructed;
 
@@ -51,26 +56,36 @@ void part1(const vector<string>& rows, int labRow, int labCol)
             }
         }
 
+        absSum = abs(rowObstructed - row);
+        cout << absSum << endl;
         sum += abs(rowObstructed - row);
         row = rowObstructed;
 
-        colObstructed = rows[rowObstructed].find('#') + 1;
-        if(colObstructed - 1 == INVALID_POS)
+        // horizontal |<| reverse
+
+        string reverseRow = rows[rowObstructed].substr(0, colObstructed);
+        reverse(reverseRow.begin(), reverseRow.end());
+        const int reverseCol = reverseRow.find('#');
+        colObstructed = abs(colObstructed - reverseCol) + (reverseRow.size() - colObstructed);
+
+        if(reverseCol  == INVALID_POS)
             break;
 
+         absSum = abs(colObstructed - col);
+        cout << absSum << endl;
         sum += abs(colObstructed - col);
         col = colObstructed;
-
-        sum++;
+        
     } while (rows[rowObstructed].at(colObstructed) == '.');
-    
+
+    sum -= rows.size() - colObstructed;
     cout << sum << endl;
 }
 
 int main()
 {
     string inputLine;
-    fstream inputFile("test_input.txt");
+    fstream inputFile("input.txt");
 
     vector<string> rows;
 
