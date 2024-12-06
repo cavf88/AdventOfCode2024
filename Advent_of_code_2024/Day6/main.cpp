@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <iostream>
+#include <map>
 #include <string>
 #include <fstream>
 #include <vector>
@@ -16,12 +17,12 @@ void part1(const vector<string>& rows, int labRow, int labCol)
 
     int rowObstructed = labRow;
     int colObstructed = labCol;
-    int absSum = 0;
 
     do
     {
+        int i;
         // vertical lookup |^|
-        for(int i = rowObstructed; i > INVALID_POS; --i)
+        for(i = rowObstructed; i > INVALID_POS; --i)
         {
             if(rows[i].at(colObstructed) == '#')
             {
@@ -29,24 +30,22 @@ void part1(const vector<string>& rows, int labRow, int labCol)
                 break;
             }
         }
+        if(rowObstructed - i < 0)
+            break;
 
-        absSum = abs(rowObstructed - row);
-        cout << absSum << endl;
         sum += abs(rowObstructed - row);
         row = rowObstructed;
 
         // horizontal lookup |>|
-        colObstructed = rows[rowObstructed].find('#', colObstructed) - 1;
+        colObstructed = rows[rowObstructed].find_first_of('#', colObstructed) - 1;
         if(colObstructed + 1 == INVALID_POS)
             break;
 
-        absSum = abs(colObstructed - col);
-        cout << absSum << endl;
         sum += abs(colObstructed - col);
         col = colObstructed;
 
         // vertical |v|
-        for(int i = rowObstructed; i < rows.size(); ++i)
+        for(i = rowObstructed; i < rows.size(); ++i)
         {
 
             if(rows[i].at(colObstructed) == '#')
@@ -56,23 +55,21 @@ void part1(const vector<string>& rows, int labRow, int labCol)
             }
         }
 
-        absSum = abs(rowObstructed - row);
-        cout << absSum << endl;
+        if(i + rowObstructed == rows.size())
+            break;
+
         sum += abs(rowObstructed - row);
         row = rowObstructed;
 
         // horizontal |<| reverse
-
         string reverseRow = rows[rowObstructed].substr(0, colObstructed);
         reverse(reverseRow.begin(), reverseRow.end());
-        const int reverseCol = reverseRow.find('#');
+        const int reverseCol = reverseRow.find_first_of('#');
         colObstructed = abs(colObstructed - reverseCol) + (reverseRow.size() - colObstructed);
 
         if(reverseCol  == INVALID_POS)
             break;
 
-         absSum = abs(colObstructed - col);
-        cout << absSum << endl;
         sum += abs(colObstructed - col);
         col = colObstructed;
         
@@ -85,7 +82,7 @@ void part1(const vector<string>& rows, int labRow, int labCol)
 int main()
 {
     string inputLine;
-    fstream inputFile("input.txt");
+    fstream inputFile("input_test.txt");
 
     vector<string> rows;
 

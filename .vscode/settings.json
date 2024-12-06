@@ -10,6 +10,7 @@
         "algorithm": "cpp",
         "regex": "cpp",
         "map": "cpp",
-        "xtree": "cpp"
+        "xtree": "cpp",
+        "iostream": "cpp"
     }
 }
