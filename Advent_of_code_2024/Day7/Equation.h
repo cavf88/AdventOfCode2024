@@ -11,6 +11,7 @@ class Equation
 
         void pushBackOperand(const int operand);
         bool isEquationValid();
+        int getResult() {return m_result;};
 
     private:
         std::vector<int> m_operands;
