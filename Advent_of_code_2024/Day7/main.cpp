@@ -47,12 +47,15 @@ Equations parseInput(const string& inputName)
 
 int main()
 {
-    const Equations equations = parseInput("input.txt");
+    const Equations equations = parseInput("input_test.txt");
     int sum = 0;
     for(auto e :  equations)
     {
         if(e.isEquationValid())
+        {
             sum += e.getResult();
+            cout << e << endl;
+        }
     }
 
     cout << sum << endl;

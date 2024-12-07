@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <iostream>
 
 class Equation
 {
@@ -8,6 +9,8 @@ class Equation
         Equation(const int result);
         Equation(const Equation& e);
         ~Equation() = default;
+
+        friend std::ostream& operator<<(std::ostream& os, const Equation& e);
 
         void pushBackOperand(const int operand);
         bool isEquationValid();
