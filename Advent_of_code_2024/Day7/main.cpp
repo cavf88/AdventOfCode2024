@@ -19,7 +19,7 @@ Equations parseInput(const string& inputName)
     while(getline(inputFile, inputLine))
     {
         int pos = inputLine.find(':');
-        const int result = atoi(inputLine.substr(0, pos).c_str());
+        std::int64_t result = atoll(inputLine.substr(0, pos).c_str());
         Equation equation(result);
         pos++; //to avoid the first empty space after ":"
         do
@@ -47,14 +47,14 @@ Equations parseInput(const string& inputName)
 
 int main()
 {
-    const Equations equations = parseInput("input_test.txt");
-    int sum = 0;
+    const Equations equations = parseInput("input.txt");
+    std::int64_t sum = 0;
     for(auto e :  equations)
     {
         if(e.isEquationValid())
         {
             sum += e.getResult();
-            cout << e << endl;
+            //cout << e << endl;
         }
     }
 

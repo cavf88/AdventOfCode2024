@@ -8,7 +8,7 @@
 const static int BIT_SIZE = 16;
 
 
-Equation::Equation(int result)
+Equation::Equation(std::int64_t result)
 : m_result(result)
 {}
 
@@ -65,7 +65,7 @@ bool Equation::isEquationValid()
     for(const auto& op : m_operators)
     {
         std::string operandsStr = op;
-        int result = m_operands[0];
+        std::int64_t result = m_operands[0];
         for(int i = 1; i < m_operands.size(); ++i)
         {
             if(operandsStr[i-1] == '1')
