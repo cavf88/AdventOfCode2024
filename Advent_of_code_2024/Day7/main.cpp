@@ -5,19 +5,22 @@
 #include <fstream>
 #include <vector>
 
+#include "Equation.h"
+
 using namespace std;
-typedef map<int, vector<int>> Equations;
+typedef vector<Equation> Equations;
 
 Equations parseInput(const string& inputName)
 {
     string inputLine;
     fstream inputFile(inputName);
-    Equations equations;
     
+    Equations equations;
     while(getline(inputFile, inputLine))
     {
         int pos = inputLine.find(':');
         const int result = atoi(inputLine.substr(0, pos).c_str());
+        Equation equation(result);
         pos++; //to avoid the first empty space after ":"
         do
         {
@@ -29,10 +32,12 @@ Equations parseInput(const string& inputName)
                 operand = atoi(inputLine.substr(pos, newPos).c_str());
 
             if(operand > 0)
-                equations[result].push_back(operand);
+                equation.pushBackOperand(operand);
             pos = newPos;
 
         }while(pos != string::npos);
+        
+        equations.push_back(equation);
     }
     inputFile.close();
 
@@ -41,7 +46,7 @@ Equations parseInput(const string& inputName)
 
 int main()
 {
-    const Equations equations = parseInput("input_test.txt");
+    const Equations equations = parseInput("input.txt");
 
     return 0;
 }
