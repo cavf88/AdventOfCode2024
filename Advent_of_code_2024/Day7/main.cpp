@@ -37,6 +37,7 @@ Equations parseInput(const string& inputName)
 
         }while(pos != string::npos);
         
+        //equation.generateOperators();
         equations.push_back(equation);
     }
     inputFile.close();
@@ -46,7 +47,7 @@ Equations parseInput(const string& inputName)
 
 int main()
 {
-    const Equations equations = parseInput("input.txt");
+    const Equations equations = parseInput("input_test.txt");
 
     return 0;
 }
