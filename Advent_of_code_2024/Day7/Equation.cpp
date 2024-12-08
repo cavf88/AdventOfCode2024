@@ -93,6 +93,7 @@ bool Equation::isEquationValid()
     return false;
 }
 
+// icomplete contation as I am giving precedence to the || operator instead of treating it from left to right.
 int64_t Equation::getConcatenatedValue()
 {
     int i = 0;
