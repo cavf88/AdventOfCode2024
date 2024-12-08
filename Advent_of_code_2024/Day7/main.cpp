@@ -47,18 +47,25 @@ Equations parseInput(const string& inputName)
 
 int main()
 {
-    const Equations equations = parseInput("input.txt");
+    const Equations equations = parseInput("input_test.txt");
     std::int64_t sum = 0;
+    std::int64_t sum2 = 0;
     for(auto e :  equations)
     {
         if(e.isEquationValid())
         {
             sum += e.getResult();
+            sum2 += e.getResult();
             //cout << e << endl;
+        }
+        else
+        {
+            sum2 += e.getConcatenatedValue();
         }
     }
 
     cout << sum << endl;
+    cout << sum2 << endl;
 
     return 0;
 }

@@ -6,7 +6,7 @@ class Equation
 {
     public:
         Equation() = default;
-        Equation(const std::int64_t result);
+        Equation(const int64_t result);
         Equation(const Equation& e);
         ~Equation() = default;
 
@@ -14,12 +14,13 @@ class Equation
 
         void pushBackOperand(const int operand);
         bool isEquationValid();
-        std::int64_t getResult() {return m_result;};
+        int64_t getConcatenatedValue();
+        int64_t getResult() {return m_result;};
 
     private:
         std::vector<int> m_operands;
         std::vector<std::string> m_operators;
-        std::int64_t m_result = 0;
+        int64_t m_result = 0;
 
         void generateOperators();
         

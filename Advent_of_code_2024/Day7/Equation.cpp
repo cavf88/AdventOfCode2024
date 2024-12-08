@@ -8,7 +8,7 @@
 const static int BIT_SIZE = 16;
 
 
-Equation::Equation(std::int64_t result)
+Equation::Equation(int64_t result)
 : m_result(result)
 {}
 
@@ -62,10 +62,16 @@ void Equation::generateOperators()
 
 bool Equation::isEquationValid()
 {
+    if(m_operands.size() == 0)
+        return false;
+
+    if(m_operands.size() == 1 && m_operands[0] ==  m_result)
+        return true;
+
     for(const auto& op : m_operators)
     {
         std::string operandsStr = op;
-        std::int64_t result = m_operands[0];
+        int64_t result = m_operands[0];
         for(int i = 1; i < m_operands.size(); ++i)
         {
             if(operandsStr[i-1] == '1')
@@ -85,4 +91,36 @@ bool Equation::isEquationValid()
          
     }
     return false;
+}
+
+int64_t Equation::getConcatenatedValue()
+{
+    int i = 0;
+    int k = i + 1;
+    std::vector<Equation> concatenatedEquation;
+    do
+    {
+        Equation e(m_result);
+        std::string operandStr = std::to_string(m_operands[i]) + std::to_string(m_operands[k]);
+        for(int j = 0; j < m_operands.size(); ++j)
+        {
+            if(j == i)
+                continue;
+            else if(j == k)
+                e.pushBackOperand(atoi(operandStr.c_str()));
+            else
+                e.pushBackOperand(m_operands[j]);
+        }
+        i++;
+        k++;
+        concatenatedEquation.push_back(e);
+    } while (k < m_operands.size());
+
+    for(auto& e : concatenatedEquation)
+    {
+        if(e.isEquationValid())
+            return e.getResult();
+    }
+
+    return 0;
 }
