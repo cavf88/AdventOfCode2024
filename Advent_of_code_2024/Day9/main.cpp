@@ -47,8 +47,8 @@ Disk parseInput(const string& inputName)
 int main()
 {
 
-    Disk disk = parseInput("input.txt");
-    disk.compactDisk();
-    disk.outPutDisk();
+    Disk disk = parseInput("input_test.txt");
+    disk.compactDisk(true);
+    disk.outPutDisk(false);
     return 0;
 }

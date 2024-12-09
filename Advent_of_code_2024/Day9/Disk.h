@@ -8,7 +8,7 @@ class Disk
         ~Disk() = default;
 
         void pushFile(const File& file);
-        void outPutDisk();
+        void outPutDisk(bool asString = false);
         void compactDisk(bool moveFile = false);
 
     private:
