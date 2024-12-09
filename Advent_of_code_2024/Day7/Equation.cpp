@@ -60,13 +60,27 @@ void Equation::generateOperators()
     }
 }
 
-bool Equation::isEquationValid()
+void Equation::generateConcatenationOperators()
+{
+    for(int i = 0; i < m_operands.size(); i++)
+    {
+        for(int k = 1; k < m_operands.size() - 1; k++)
+        {
+
+        }
+    }
+}
+
+bool Equation::isEquationValid(bool concatenate)
 {
     if(m_operands.size() == 0)
         return false;
 
     if(m_operands.size() == 1 && m_operands[0] ==  m_result)
         return true;
+
+    if(concatenate)
+        
 
     for(const auto& op : m_operators)
     {

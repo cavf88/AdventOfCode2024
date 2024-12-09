@@ -13,7 +13,7 @@ class Equation
         friend std::ostream& operator<<(std::ostream& os, const Equation& e);
 
         void pushBackOperand(const int operand);
-        bool isEquationValid();
+        bool isEquationValid(bool concatenate);
         int64_t getConcatenatedValue();
         int64_t getResult() {return m_result;};
 
@@ -23,5 +23,6 @@ class Equation
         int64_t m_result = 0;
 
         void generateOperators();
+        void generateConcatenationOperators();
         
 };
