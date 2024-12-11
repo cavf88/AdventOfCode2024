@@ -6,13 +6,14 @@
 #include <fstream>
 #include <vector>
 #include <cstdlib> 
+#include <chrono>
 
 
 using namespace std;
 
 typedef uint64_t biglong;
 static map<biglong, biglong> s_finalCount;
-const int MAX_BLINKS = 75;
+const int MAX_BLINKS = 25;
 
 string stringifyValue(const biglong value)
 {
@@ -26,6 +27,7 @@ return string();
 
 int main()
 {
+    const auto start{std::chrono::steady_clock::now()};
     string inputLine;
     fstream inputFile("input.txt");
 
@@ -89,6 +91,12 @@ int main()
     {
         sum += it.second;
     }
-    cout << sum;
+    cout << sum << endl;
+
+    const auto end{std::chrono::steady_clock::now()};
+    const std::chrono::duration<double> elapsed_seconds{end - start};
+
+    cout << "Time(ms):" << elapsed_seconds.count() * 1000 << "s";
+
     return 0;
 }
