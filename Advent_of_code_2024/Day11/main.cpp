@@ -13,7 +13,7 @@ using namespace std;
 
 typedef uint64_t biglong;
 static map<biglong, biglong> s_finalCount;
-const int MAX_BLINKS = 25;
+const int MAX_BLINKS = 75;
 
 string stringifyValue(const biglong value)
 {
@@ -22,7 +22,7 @@ string stringifyValue(const biglong value)
     if(ss.str().size()%2 == 0)
         return ss.str();
 
-return string();
+    return string();
 }
 
 int main()
@@ -52,7 +52,6 @@ int main()
             {
                 // convert to 1
                 tempMap[1] += it->second;
-                s_finalCount.erase(it);
             }
             else
             {
@@ -61,7 +60,7 @@ int main()
                 {
                     // split                                                                                                        
                     const int halfPos = valueStr.size() / 2;
-                    const long count = it->second;
+                    const biglong count = it->second;
 
                     // first part of the string
                     string halfString = valueStr.substr(0, halfPos);
@@ -72,13 +71,11 @@ int main()
                     halfString = valueStr.substr(halfPos);
                     halfIndex = strtoull(halfString.c_str(), NULL, 10);
                     tempMap[halfIndex] += count;
-                    s_finalCount.erase(it);
                 }
                 else
                 {
                     // case in which you multiply by 2024
                     tempMap[it->first * 2024] += it->second;
-                    s_finalCount.erase(it);
                 }
             }
         }
@@ -86,7 +83,7 @@ int main()
         s_finalCount = tempMap;
     }
 
-    long sum = 0;
+    biglong sum = 0;
     for(const auto& it: s_finalCount)
     {
         sum += it.second;
