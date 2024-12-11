@@ -55,6 +55,9 @@
         "xmemory": "cpp",
         "xstddef": "cpp",
         "xtr1common": "cpp",
-        "bitset": "cpp"
+        "bitset": "cpp",
+        "list": "cpp",
+        "ranges": "cpp",
+        "span": "cpp"
     }
 }
