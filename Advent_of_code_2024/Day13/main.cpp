@@ -38,7 +38,7 @@ int main()
             //ay*X+by*Y = r2
             //int X = (bx*i)/ax;
             long X = (r1 - bx*i)/ax;
-            if(ay*X+by*i == r2)
+            if(ay*X+by*i == r2 && ax*X+bx*i == r1)
             {
                 cout << "Equation" << count << " result: " << X << ", " << i << endl;
                 long tokenSum = 3*X + i*1;
