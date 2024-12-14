@@ -19,6 +19,6 @@ void RobotManager::draw()
     for(auto& it : m_robots)
     {
         const Tuple t = it.getPosition();
-        printToCoordinates(t.x, t.y, "X");
+        Utils::printToCoordinates(t.x, t.y, "X");
     }
 }
