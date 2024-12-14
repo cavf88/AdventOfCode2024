@@ -1,3 +1,4 @@
+#pragma once
 struct Tuple
 {
     Tuple(const int x, const int y): x(x), y(y){}
@@ -7,6 +8,8 @@ struct Tuple
     {
         this->x += t.x;
         this->y += t.y;
+
+        return *this;
     }
 
     int x = 0;

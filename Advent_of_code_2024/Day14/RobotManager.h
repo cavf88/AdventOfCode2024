@@ -1,3 +1,4 @@
+#pragma once
 #include "Tuple.h"
 #include <vector>
 #include "Robot.h"
@@ -11,7 +12,7 @@ public:
     void addRobot(const Tuple& initialPosition, const Tuple& speed);
     void update();
     std::vector<Robot> generateRobots();
-    // void draw();
+    void draw();
 
 private:
     std::vector<Robot> m_robots;
