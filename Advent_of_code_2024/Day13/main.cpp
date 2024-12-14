@@ -24,7 +24,7 @@ const static double IDENTITY_VALUE = 1.0;
 //ax*X+bx*Y = r1
 //ay*X+by*Y = r2
 //int X = (bx*i)/ax;
-int solvePart1(const int ax, const int ay, const int bx, const int by, const int r1, const int r2, const int count)
+int solveBySubstitution(const int ax, const int ay, const int bx, const int by, const int r1, const int r2)
 {
     int sum = 0;
     for(int i = 0; i < MAX_ITERATIONS_PART1; ++i)
@@ -35,7 +35,6 @@ int solvePart1(const int ax, const int ay, const int bx, const int by, const int
         int X = (r1 - bx*i)/ax;
         if(ay*X+by*i == r2 && ax*X+bx*i == r1)
         {
-            cout << "Equation" << count << " result: " << X << ", " << i << endl;
             int tokenSum = 3*X + i*1;
             sum += tokenSum;
             break;
@@ -47,7 +46,7 @@ int solvePart1(const int ax, const int ay, const int bx, const int by, const int
 }
 
 // works for test, but for real input it breaks due to floating point not being exact.
-biglong solveWithMatrix(const double ax, const double ay, const double bx, const double by, const biglong r1, const biglong r2, const int count)
+biglong solveByMatrix(const double ax, const double ay, const double bx, const double by, const biglong r1, const biglong r2)
 {
     biglong sum = 0;
 
@@ -86,7 +85,7 @@ biglong solveWithMatrix(const double ax, const double ay, const double bx, const
 // Solves by addition
 //ax*X+bx*Y = r1  => (by)(ax*X+bx*Y) = r1(by)
 //ay*X+by*Y = r2  => (-bx)(ay*X+by*Y) = r2(-bx)
-bigbiglong solvePart2(const biglong ax, const biglong ay, const biglong bx, const biglong by, const biglong r1, const biglong r2, const int count)
+bigbiglong solveByAddition(const biglong ax, const biglong ay, const biglong bx, const biglong by, const biglong r1, const biglong r2, bool part2)
 {
     bigbiglong sum = 0;
 
@@ -97,7 +96,8 @@ bigbiglong solvePart2(const biglong ax, const biglong ay, const biglong bx, cons
     {
         biglong Y = rhs / YCoeff;
         biglong X = (r1 - ax * Y) / bx;
-        sum += Y * 3 + X * 1;
+        if((X > 100 && Y > 100) || (!part2))
+            sum += Y * 3 + X * 1;
     }    
 
     return sum;
@@ -128,22 +128,32 @@ int main()
         getline(inputFile, inputLine);
         sscanf(inputLine.c_str(), "Prize: X=%d, Y=%d", &r1, &r2);
 
-        //biglong result = solvePart2(ax, ay, bx, by, r1, r2, count);        
-        bigbiglong result = solvePart2(
+        bigbiglong result1 = solveByAddition(ax, ay, bx, by, r1, r2, false);        
+        bigbiglong result2 = solveByAddition(
             ax,
             ay,
             bx,
             by,
             biglong(r1) + biglong(10000000000000),
             biglong(r2) + biglong(10000000000000),
-            count);
+            true);
 
-        if(result != 0)
+        if(result1 != 0)
         {
-            sumPart1 += result;
-            cout << "Button A: " << ax << "," << ay << endl;
-            cout << "Button B: " << bx << "," << by << endl;
-        }            
+            sumPart1 += result1;            
+        }
+        if(result2 != 0)
+        {
+            sumPart2 += result2;            
+        }
+        if(result1 && result2)
+        {
+            // debug
+            //cout << "Button A: " << ax << "," << ay << endl;
+            //cout << "Button B: " << bx << "," << by << endl;
+            //cout << "[[" << ax << ", " << ay << "], [" << bx << ", " << by << "]" << endl;
+        }
+
         count++;
     }while(getline(inputFile, inputLine));
     inputFile.close();
