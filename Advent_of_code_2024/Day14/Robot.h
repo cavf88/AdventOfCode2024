@@ -10,7 +10,6 @@ public:
     const Tuple getPosition(){return m_position;};
 
     void move();
-    void teleport();
 private:
     Tuple m_position;
     Tuple m_speed;

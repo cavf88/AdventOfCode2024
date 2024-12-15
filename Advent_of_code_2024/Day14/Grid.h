@@ -2,7 +2,7 @@
 #include "Tuple.h"
 #include "../_utils/Utils.h"
 
-#define TEST
+//#define TEST
 
 #ifndef TEST
 const static int GRID_W = 101;

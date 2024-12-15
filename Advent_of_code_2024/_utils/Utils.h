@@ -5,5 +5,5 @@
 
 namespace Utils
 {
-void printToCoordinates(int x, int y, const char *format, ...);
+void printToCoordinates(int x, int y, const std::string& s);
 }
